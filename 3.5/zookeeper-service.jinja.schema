@@ -1,66 +1,30 @@
-{% set CLIENT_PORT = 2181 %}
-{% set PEER_PORT = 2888 %}
-{% set ELECTION_PORT = 3888 %}
-{% set PROTOCOL = 'TCP' %}
+info:
+  title: ZooKeeper ensemble
+  description: |
+    Defines a ZooKeeper ensemble.
 
+properties:
+  replicas:
+    type: int
+    default: 3
+    description: Number of ZooKeeper ensemble nodes.
 
-resources:
-  - name: zookeeper-service
-    type: Service
-    properties:
-      kind: Service
-      apiVersion: v1
-      metadata:
-        name: zookeeper-service
-        labels:
-          component: zookeeper-service
-      spec:
-        ports:
-          - name: client-port
-            port: {{ CLIENT_PORT }}
-            protocol: {{ PROTOCOL }}
-            targetPort: {{ CLIENT_PORT }}
-          - name: peer-port
-            port: {{ PEER_PORT }}
-            protocol: {{ PROTOCOL }}
-            targetPort: {{ PEER_PORT }}
-          - name: election-port
-            port: {{ ELECTION_PORT }}
-            protocol: {{ PROTOCOL }}
-            targetPort: {{ ELECTION_PORT }}
-        selector:
-          component: zookeeper-pod
+  client_port:
+    type: int
+    default: 2181
+    description: The port is used to client connections (2181 by default).
 
-  - name: zookeeper-controller
-    type: ReplicationController
-    properties:
-      kind: ReplicationController
-      apiVersion: v1
-      metadata:
-        name: zookeeper-controller
-        labels:
-          component: zookeeper-controller
-      spec:
-        replicas: 1
-        selector:
-          component: zookeeper-pod
-        template:
-          metadata:
-            labels:
-              component: zookeeper-pod
-          spec:
-            containers:
-              - name: zookeeper-container
-                image: mosuka/docker-zookeeper:release-3.5
-                args:
-                  - docker-zookeeper.sh
-                ports:
-                  - name: client-port
-                    containerPort: {{ CLIENT_PORT }}
-                    protocol: {{ PROTOCOL }}
-                  - name: peer-port
-                    containerPort: {{ PEER_PORT }}
-                    protocol: {{ PROTOCOL }}
-                  - name: election-port
-                    containerPort: {{ ELECTION_PORT }}
-                    protocol: {{ PROTOCOL }}
+  peer_port:
+    type: int
+    default: 2888
+    description: The port is used to talk to each other (2888 by default).
+
+  election_port:
+    type: int
+    default: 3888
+    description: The port is used to leader election (3888 by default).
+
+  protocol:
+    type: string
+    default: TCP
+    description: Communication protocol name.

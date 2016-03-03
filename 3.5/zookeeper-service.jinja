@@ -1,8 +1,9 @@
-{% set CLIENT_PORT = 2181 %}
-{% set PEER_PORT = 2888 %}
-{% set ELECTION_PORT = 3888 %}
-{% set PROTOCOL = 'TCP' %}
-
+{% set PROPERTIES = properties or {} %}
+{% set REPLICAS = PROPERTIES['replicas'] or 3 %}
+{% set CLIENT_PORT = PROPERTIES['client_port'] or 2181 %}
+{% set PEER_PORT = PROPERTIES['peer_port'] or 2888 %}
+{% set ELECTION_PORT = PROPERTIES['election_port'] or 3888 %}
+{% set PROTOCOL = PROPERTIES['protocol'] or 'TCP' %}
 
 resources:
   - name: zookeeper-service
@@ -41,7 +42,7 @@ resources:
         labels:
           component: zookeeper-controller
       spec:
-        replicas: 1
+        replicas: {{ REPLICAS }}
         selector:
           component: zookeeper-pod
         template:
