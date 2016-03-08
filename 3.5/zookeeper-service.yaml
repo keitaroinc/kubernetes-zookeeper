@@ -1,6 +1,0 @@
-imports:
-- path: zookeeper-service.jinja
-
-resources:
-- name: zookeeper
-  type: zookeeper-service.jinja
