@@ -182,11 +182,11 @@ zookeeper-controller-3   zookeeper-container-3   mosuka/docker-zookeeper:release
 ### 6. Check ZooKeeper pods
 
 ```sh
-$ kubectl get pods -l group=zookeeper-pod
-NAME                           READY     STATUS    RESTARTS   AGE
-zookeeper-controller-1-36moh   1/1       Running   0          1m
-zookeeper-controller-2-ogy3p   1/1       Running   0          1m
-zookeeper-controller-3-rembk   1/1       Running   0          1m
+$ kubectl get pods -l group=zookeeper-pod -o wide
+NAME                           READY     STATUS    RESTARTS   AGE       NODE
+zookeeper-controller-1-6k3r0   1/1       Running   0          4m        172.17.4.202
+zookeeper-controller-2-7bwf8   1/1       Running   0          3m        172.17.4.202
+zookeeper-controller-3-td7ll   1/1       Running   0          3m        172.17.4.201
 ```
 
 ### 7. Get host IP and port

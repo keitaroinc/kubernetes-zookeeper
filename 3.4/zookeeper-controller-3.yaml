@@ -17,7 +17,6 @@ spec:
         app: zookeeper-pod-3
     spec:
       containers:
-      #- name: zoo3
       - name: zookeeper-container-3
         image: mosuka/docker-zookeeper:release-3.4
         ports:
