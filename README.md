@@ -58,16 +58,21 @@ NAME                         READY     STATUS    RESTARTS   AGE
 zookeeper-controller-3ovgu   1/1       Running   0          4m
 ```
 
-### 7. Connect to ZooKeeper using zkCli.sh on the local machine
+### 7. Get host IP and port
 
 ```sh
-$ kubectl get pods -l app=zookeeper-pod --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}"
+$ ZOOKEEPER_HOST=$(kubectl get pods -l app=zookeeper-pod --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}") && \
+    echo ${ZOOKEEPER_HOST}
 172.17.4.201
 
-$ kubectl get services -l app=zookeeper-service --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}"
+$ ZOOKEEPER_PORT=$(kubectl get services -l app=zookeeper-service --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}") && \
+    echo ${ZOOKEEPER_PORT}
 31294
+```
 
-$ ${HOME}/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server 172.17.4.201:31294
+### 8. Connect to ZooKeeper using zkCli.sh on the local machine
+
+$ ${HOME}/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server ${ZOOKEEPER_HOST}:${ZOOKEEPER_PORT}
 Connecting to 172.17.4.201:31294
 2016-03-14 11:20:06,615 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT
 2016-03-14 11:20:06,620 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=172.24.230.16
@@ -184,43 +189,60 @@ zookeeper-controller-2-ogy3p   1/1       Running   0          1m
 zookeeper-controller-3-rembk   1/1       Running   0          1m
 ```
 
+### 7. Get host IP and port
+
+```sh
+$ ZOOKEEPER_1_HOST=$(kubectl get pods -l app=zookeeper-pod-1 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}") && \
+    echo ${ZOOKEEPER_1_HOST}
+172.17.4.202
+
+$ ZOOKEEPER_1_PORT=$(kubectl get services -l app=zookeeper-service-1 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}") && \
+    echo ${ZOOKEEPER_1_PORT}
+31639
+
+$ ZOOKEEPER_2_HOST=$(kubectl get pods -l app=zookeeper-pod-2 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}") && \
+    echo ${ZOOKEEPER_2_HOST}
+172.17.4.202
+
+$ ZOOKEEPER_2_PORT=$(kubectl get services -l app=zookeeper-service-2 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}") && \
+    echo ${ZOOKEEPER_2_PORT}
+32060
+
+$ ZOOKEEPER_3_HOST=$(kubectl get pods -l app=zookeeper-pod-3 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}") && \
+    echo ${ZOOKEEPER_3_HOST}
+172.17.4.202
+
+$ ZOOKEEPER_3_PORT=$(kubectl get services -l app=zookeeper-service-3 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}") && \
+    echo ${ZOOKEEPER_3_PORT}
+32570
+```
+
 ### 7. Connect to ZooKeeper ensemble using zkCli.sh on the local machine
 
 ```sh
-$ kubectl get pods -l app=zookeeper-pod-1 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}"
-172.17.4.201
-
-$ kubectl get services -l app=zookeeper-service-1 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}"
-31639
-
-$ ${HOME}/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server 172.17.4.201:31639
-Connecting to 172.17.4.201:31639
-2016-03-14 12:04:39,198 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT
-2016-03-14 12:04:39,201 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=172.24.230.16
-2016-03-14 12:04:39,201 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.8.0_65
-2016-03-14 12:04:39,203 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation
-2016-03-14 12:04:39,203 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre
-2016-03-14 12:04:39,203 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../build/classes:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../build/lib/*.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/slf4j-log4j12-1.6.1.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/slf4j-api-1.6.1.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/netty-3.7.0.Final.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/log4j-1.2.16.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/jline-0.9.94.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../zookeeper-3.4.8.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../src/java/lib/*.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../conf:
-2016-03-14 12:04:39,204 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/Users/mosuka/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
-2016-03-14 12:04:39,204 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/var/folders/99/p369dv7n5sqdl9rdvyx0vqzr0000gn/T/
-2016-03-14 12:04:39,204 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=<NA>
-2016-03-14 12:04:39,204 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Mac OS X
-2016-03-14 12:04:39,204 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=x86_64
-2016-03-14 12:04:39,204 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=10.11.3
-2016-03-14 12:04:39,204 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=mosuka
-2016-03-14 12:04:39,205 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/Users/mosuka
-2016-03-14 12:04:39,205 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/Users/mosuka/git
-2016-03-14 12:04:39,206 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=172.17.4.201:31639 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@446cdf90
+$ ${HOME}/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server ${ZOOKEEPER_1_HOST}:${ZOOKEEPER_1_PORT}
+Connecting to 172.17.4.202:31639
+2016-03-14 16:24:53,413 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT
+2016-03-14 16:24:53,421 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=172.24.230.16
+2016-03-14 16:24:53,421 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.8.0_65
+2016-03-14 16:24:53,426 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation
+2016-03-14 16:24:53,427 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre
+2016-03-14 16:24:53,427 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../build/classes:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../build/lib/*.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/slf4j-log4j12-1.6.1.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/slf4j-api-1.6.1.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/netty-3.7.0.Final.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/log4j-1.2.16.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../lib/jline-0.9.94.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../zookeeper-3.4.8.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../src/java/lib/*.jar:/Users/mosuka/zookeeper/zookeeper-3.4.8/bin/../conf:
+2016-03-14 16:24:53,480 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/Users/mosuka/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+2016-03-14 16:24:53,480 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/var/folders/99/p369dv7n5sqdl9rdvyx0vqzr0000gn/T/
+2016-03-14 16:24:53,481 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=<NA>
+2016-03-14 16:24:53,481 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Mac OS X
+2016-03-14 16:24:53,481 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=x86_64
+2016-03-14 16:24:53,481 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=10.11.3
+2016-03-14 16:24:53,482 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=mosuka
+2016-03-14 16:24:53,482 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/Users/mosuka
+2016-03-14 16:24:53,482 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/Users/mosuka
+2016-03-14 16:24:53,484 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=172.17.4.202:31639 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@446cdf90
 Welcome to ZooKeeper!
-2016-03-14 12:04:39,240 [myid:] - INFO  [main-SendThread(172.17.4.201:31639):ClientCnxn$SendThread@1032] - Opening socket connection to server 172.17.4.201/172.17.4.201:31639. Will not attempt to authenticate using SASL (unknown error)
+2016-03-14 16:24:53,640 [myid:] - INFO  [main-SendThread(172.17.4.202:31639):ClientCnxn$SendThread@1032] - Opening socket connection to server 172.17.4.202/172.17.4.202:31639. Will not attempt to authenticate using SASL (unknown error)
 JLine support is enabled
-2016-03-14 12:04:39,380 [myid:] - INFO  [main-SendThread(172.17.4.201:31639):ClientCnxn$SendThread@876] - Socket connection established to 172.17.4.201/172.17.4.201:31639, initiating session
-2016-03-14 12:04:39,422 [myid:] - INFO  [main-SendThread(172.17.4.201:31639):ClientCnxn$SendThread@1299] - Session establishment complete on server 172.17.4.201/172.17.4.201:31639, sessionid = 0x153730ce5ab0001, negotiated timeout = 30000
-
-WATCHER::
-
-WatchedEvent state:SyncConnected type:None path:null
-[zk: 172.17.4.201:31639(CONNECTED) 0]
+2016-03-14 16:24:53,949 [myid:] - INFO  [main-SendThread(172.17.4.202:31639):ClientCnxn$SendThread@876] - Socket connection established to 172.17.4.202/172.17.4.202:31639, initiating session
+[zk: 172.17.4.202:31639(CONNECTING) 0]
 ```
 
 
