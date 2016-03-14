@@ -5,7 +5,7 @@
 ### 1. Clone kubernetes-zookeeper
 
 ```sh
-$ cd $HOME/git
+$ cd ${HOME}/git
 $ git clone https://github.com/mosuka/kubernetes-zookeeper.git
 Cloning into 'kubernetes-zookeeper'...
 remote: Counting objects: 50, done.
@@ -18,7 +18,7 @@ Checking connectivity... done.
 ### 2. Start ZooKeeper service
 
 ```sh
-$ kubectl create -f $HOME/git/kubernetes-zookeeper/3.4/zookeeper-service.yaml
+$ kubectl create -f ${HOME}/git/kubernetes-zookeeper/3.4/zookeeper-service.yaml
 You have exposed your service on an external port on all nodes in your
 cluster.  If you want to expose this service to the external internet, you may
 need to set up firewall rules for the service port(s) (tcp:31294,tcp:31715,tcp:30492) to serve traffic.
@@ -38,7 +38,7 @@ zookeeper-service   10.3.0.14    nodes         2181/TCP,2888/TCP,3888/TCP   app=
 ### 4. Start ZooKeeper controller
 
 ```sh
-$ kubectl create -f $HOME/git/kubernetes-zookeeper/3.4/zookeeper-controller.yaml
+$ kubectl create -f ${HOME}/git/kubernetes-zookeeper/3.4/zookeeper-controller.yaml
 replicationcontroller "zookeeper-controller" created
 ```
 
@@ -67,7 +67,7 @@ $ kubectl get pods -l app=zookeeper-pod --template "{{ range .items }}{{if eq .s
 $ kubectl get services -l app=zookeeper-service --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}"
 31294
 
-$ $HOME/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server 172.17.4.201:31294
+$ ${HOME}/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server 172.17.4.201:31294
 Connecting to 172.17.4.201:31294
 2016-03-14 11:20:06,615 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT
 2016-03-14 11:20:06,620 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=172.24.230.16
@@ -103,7 +103,7 @@ WatchedEvent state:SyncConnected type:None path:null
 ### 1. Clone kubernetes-zookeeper
 
 ```sh
-$ cd $HOME/git
+$ cd ${HOME}/git
 $ git clone https://github.com/mosuka/kubernetes-zookeeper.git
 Cloning into 'kubernetes-zookeeper'...
 remote: Counting objects: 50, done.
@@ -116,7 +116,7 @@ Checking connectivity... done.
 ### 2. Start ZooKeeper services
 
 ```sh
-$ kubectl create -f /Users/mosuka/git/kubernetes-zookeeper/3.4/zookeeper-service-1.yaml
+$ kubectl create -f ${HOME}/git/kubernetes-zookeeper/3.4/zookeeper-service-1.yaml
 You have exposed your service on an external port on all nodes in your
 cluster.  If you want to expose this service to the external internet, you may
 need to set up firewall rules for the service port(s) (tcp:31792,tcp:31032,tcp:31336) to serve traffic.
@@ -124,7 +124,7 @@ need to set up firewall rules for the service port(s) (tcp:31792,tcp:31032,tcp:3
 See http://releases.k8s.io/release-1.1/docs/user-guide/services-firewalls.md for more details.
 service "zookeeper-service-1" created
 
-$ kubectl create -f /Users/mosuka/git/kubernetes-zookeeper/3.4/zookeeper-service-2.yaml
+$ kubectl create -f ${HOME}/git/kubernetes-zookeeper/3.4/zookeeper-service-2.yaml
 You have exposed your service on an external port on all nodes in your
 cluster.  If you want to expose this service to the external internet, you may
 need to set up firewall rules for the service port(s) (tcp:32140,tcp:31452,tcp:30356) to serve traffic.
@@ -132,7 +132,7 @@ need to set up firewall rules for the service port(s) (tcp:32140,tcp:31452,tcp:3
 See http://releases.k8s.io/release-1.1/docs/user-guide/services-firewalls.md for more details.
 service "zookeeper-service-2" created
 
-$ kubectl create -f /Users/mosuka/git/kubernetes-zookeeper/3.4/zookeeper-service-3.yaml
+$ kubectl create -f ${HOME}/git/kubernetes-zookeeper/3.4/zookeeper-service-3.yaml
 You have exposed your service on an external port on all nodes in your
 cluster.  If you want to expose this service to the external internet, you may
 need to set up firewall rules for the service port(s) (tcp:32044,tcp:32590,tcp:32133) to serve traffic.
@@ -154,13 +154,13 @@ zookeeper-service-3   10.3.0.180   nodes         2181/TCP,2888/TCP,3888/TCP   ap
 ### 4. Start ZooKeeper controllers
 
 ```sh
-$ kubectl create -f /Users/mosuka/git/kubernetes-zookeeper/3.4/zookeeper-controller-1.yaml
+$ kubectl create -f ${HOME}/git/kubernetes-zookeeper/3.4/zookeeper-controller-1.yaml
 replicationcontroller "zookeeper-controller-1" created
 
-$ kubectl create -f /Users/mosuka/git/kubernetes-zookeeper/3.4/zookeeper-controller-2.yaml
+$ kubectl create -f ${HOME}/git/kubernetes-zookeeper/3.4/zookeeper-controller-2.yaml
 replicationcontroller "zookeeper-controller-2" created
 
-$ kubectl create -f /Users/mosuka/git/kubernetes-zookeeper/3.4/zookeeper-controller-3.yaml
+$ kubectl create -f ${HOME}/git/kubernetes-zookeeper/3.4/zookeeper-controller-3.yaml
 replicationcontroller "zookeeper-controller-3" created
 ```
 
@@ -193,7 +193,7 @@ $ kubectl get pods -l app=zookeeper-pod-1 --template "{{ range .items }}{{if eq 
 $ kubectl get services -l app=zookeeper-service-1 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}"
 31639
 
-$ $HOME/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server 172.17.4.201:31639
+$ ${HOME}/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server 172.17.4.201:31639
 Connecting to 172.17.4.201:31639
 2016-03-14 12:04:39,198 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT
 2016-03-14 12:04:39,201 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=172.24.230.16
