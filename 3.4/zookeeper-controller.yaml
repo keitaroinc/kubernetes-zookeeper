@@ -1,23 +1,21 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: zookeeper-controller-2
+  name: zookeeper-controller
   namespace: default
   labels:
-    group: zookeeper-controller
-    app: zookeeper-controller-2
+    app: zookeeper-controller
 spec:
   replicas: 1
   selector:
-    app: zookeeper-pod-2
+    app: zookeeper-pod
   template:
     metadata:
       labels:
-        group: zookeeper-pod
-        app: zookeeper-pod-2
+        app: zookeeper-pod
     spec:
       containers:
-      - name: zookeeper-container-2
+      - name: zookeeper-container
         image: mosuka/docker-zookeeper:release-3.4
         ports:
         - name: client
@@ -31,10 +29,6 @@ spec:
           protocol: TCP
         env:
         - name: ZOOKEEPER_ID
-          value: "2"
+          value: "1"
         - name: ZOOKEEPER_SERVER_1
-          value: zookeeper-service-1
-        - name: ZOOKEEPER_SERVER_2
-          value: zookeeper-service-2
-        - name: ZOOKEEPER_SERVER_3
-          value: zookeeper-service-3
+          value: zookeeper-service

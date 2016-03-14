@@ -4,6 +4,7 @@ metadata:
   name: zookeeper-service-1
   namespace: default
   labels:
+    group: zookeeper-service
     app: zookeeper-service-1
 spec:
   type: NodePort
