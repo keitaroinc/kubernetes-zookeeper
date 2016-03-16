@@ -35,6 +35,8 @@ spec:
         - name: ZOOKEEPER_SERVER_1
           value: zookeeper-service-1
         - name: ZOOKEEPER_SERVER_2
-          value: zookeeper-service-2
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
         - name: ZOOKEEPER_SERVER_3
           value: zookeeper-service-3

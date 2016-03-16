@@ -31,4 +31,6 @@ spec:
         - name: ZOOKEEPER_ID
           value: "1"
         - name: ZOOKEEPER_SERVER_1
-          value: zookeeper-service
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP

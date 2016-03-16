@@ -61,12 +61,12 @@ zookeeper-controller-3ovgu   1/1       Running   0          4m
 ### 7. Get host IP and port
 
 ```sh
-$ ZOOKEEPER_HOST=$(kubectl get pods -l app=zookeeper-pod --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}") && \
-    echo ${ZOOKEEPER_HOST}
+$ ZOOKEEPER_HOST=$(kubectl get pods -l app=zookeeper-pod --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}")
+$ echo ${ZOOKEEPER_HOST}
 172.17.4.201
 
-$ ZOOKEEPER_PORT=$(kubectl get services -l app=zookeeper-service --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}") && \
-    echo ${ZOOKEEPER_PORT}
+$ ZOOKEEPER_PORT=$(kubectl get services -l app=zookeeper-service --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}")
+$ echo ${ZOOKEEPER_PORT}
 31294
 ```
 
@@ -192,28 +192,28 @@ zookeeper-controller-3-td7ll   1/1       Running   0          3m        172.17.4
 ### 7. Get host IP and port
 
 ```sh
-$ ZOOKEEPER_1_HOST=$(kubectl get pods -l app=zookeeper-pod-1 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}") && \
-    echo ${ZOOKEEPER_1_HOST}
+$ ZOOKEEPER_1_HOST=$(kubectl get pods -l app=zookeeper-pod-1 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}")
+$ echo ${ZOOKEEPER_1_HOST}
 172.17.4.202
 
-$ ZOOKEEPER_1_PORT=$(kubectl get services -l app=zookeeper-service-1 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}") && \
-    echo ${ZOOKEEPER_1_PORT}
+$ ZOOKEEPER_1_PORT=$(kubectl get services -l app=zookeeper-service-1 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}")
+$ echo ${ZOOKEEPER_1_PORT}
 31639
 
-$ ZOOKEEPER_2_HOST=$(kubectl get pods -l app=zookeeper-pod-2 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}") && \
-    echo ${ZOOKEEPER_2_HOST}
+$ ZOOKEEPER_2_HOST=$(kubectl get pods -l app=zookeeper-pod-2 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}")
+$ echo ${ZOOKEEPER_2_HOST}
 172.17.4.202
 
-$ ZOOKEEPER_2_PORT=$(kubectl get services -l app=zookeeper-service-2 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}") && \
-    echo ${ZOOKEEPER_2_PORT}
+$ ZOOKEEPER_2_PORT=$(kubectl get services -l app=zookeeper-service-2 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}")
+$ echo ${ZOOKEEPER_2_PORT}
 32060
 
-$ ZOOKEEPER_3_HOST=$(kubectl get pods -l app=zookeeper-pod-3 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}") && \
-    echo ${ZOOKEEPER_3_HOST}
+$ ZOOKEEPER_3_HOST=$(kubectl get pods -l app=zookeeper-pod-3 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}")
+$ echo ${ZOOKEEPER_3_HOST}
 172.17.4.202
 
-$ ZOOKEEPER_3_PORT=$(kubectl get services -l app=zookeeper-service-3 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}") && \
-    echo ${ZOOKEEPER_3_PORT}
+$ ZOOKEEPER_3_PORT=$(kubectl get services -l app=zookeeper-service-3 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}")
+$ echo ${ZOOKEEPER_3_PORT}
 32570
 ```
 
