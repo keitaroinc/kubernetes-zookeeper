@@ -72,6 +72,7 @@ $ echo ${ZOOKEEPER_PORT}
 
 ### 8. Connect to ZooKeeper using zkCli.sh on the local machine
 
+```sh
 $ ${HOME}/zookeeper/zookeeper-3.4.8/bin/zkCli.sh -server ${ZOOKEEPER_HOST}:${ZOOKEEPER_PORT}
 Connecting to 172.17.4.201:31294
 2016-03-14 11:20:06,615 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT
