@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: zookeeper-controller
+  namespace: default
+  labels:
+    app: zookeeper-controller
+spec:
+  replicas: 1
+  selector:
+    app: zookeeper-pod
+  template:
+    metadata:
+      labels:
+        app: zookeeper-pod
+    spec:
+      containers:
+        - name: zookeeper-container
+          image: mosuka/docker-zookeeper:release-3.5
+          ports:
+            - name: client
+              containerPort: 2181
+              protocol: TCP
+            - name: peer
+              containerPort: 2888
+              protocol: TCP
+            - name: election
+              containerPort: 3888
+              protocol: TCP
+          command:
+            - "/bin/sh"
+            - "-c"
+          args:
+            - "export ZOOKEEPER_SEED_HOST=$(curl --cacert $CRT_PATH -H \"Authorization:Bearer $(cat $TOKEN_PATH)\" https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT/$API_PATH | jq -r '.subsets[].addresses[].ip' | grep -v -e \"^$ZOOKEEPER_HOST$\" | head -1) ; export ZOOKEEPER_SEED_PORT=$(curl --cacert $CRT_PATH -H \"Authorization:Bearer $(cat $TOKEN_PATH)\" https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT/$API_PATH | jq -r '.subsets[].ports[]' | jq -r 'select(.name == \"client\").port') ; docker-run.sh"
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - "docker-stop.sh"
+          env:
+            - name: CRT_PATH
+              value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+            - name: TOKEN_PATH
+              value: /var/run/secrets/kubernetes.io/serviceaccount/token
+            - name: API_PATH
+              value: api/v1/namespaces/default/endpoints/zookeeper-service
+            - name: ZOOKEEPER_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP

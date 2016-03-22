@@ -194,7 +194,7 @@ zookeeper-controller-3-td7ll   1/1       Running   0          3m        172.17.4
 ```sh
 $ ZOOKEEPER_1_HOST=$(kubectl get pods -l app=zookeeper-pod-1 --template "{{ range .items }}{{if eq .status.phase \"Running\" }}{{ .status.hostIP }}{{ end }}{{ end }}")
 $ echo ${ZOOKEEPER_1_HOST}
-172.17.4.202
+172.17.4.201
 
 $ ZOOKEEPER_1_PORT=$(kubectl get services -l app=zookeeper-service-1 --template "{{ range .items }}{{ range .spec.ports }}{{ if eq .name \"client\" }}{{ .nodePort }}{{ end }}{{ end }}{{ end }}")
 $ echo ${ZOOKEEPER_1_PORT}
