@@ -174,11 +174,6 @@ zookeeper-controller-o94xj   1/1       Running   0          28s       172.17.4.2
 $ kubectl scale --replicas=2 replicationcontrollers zookeeper-controller
 replicationcontroller "zookeeper-controller" scaled
 
-$ kubectl get pods -l app=zookeeper-pod -o wide
-NAME                         READY     STATUS    RESTARTS   AGE       NODE
-zookeeper-controller-o94xj   1/1       Running   0          1m        172.17.4.201
-zookeeper-controller-zbkuz   1/1       Running   0          11s       172.17.4.201
-
 $ kubectl scale --replicas=3 replicationcontrollers zookeeper-controller
 replicationcontroller "zookeeper-controller" scaled
 
